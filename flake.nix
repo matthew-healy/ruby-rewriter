@@ -23,13 +23,17 @@
             rustfmt.enable = true;
           };
         };
-      in {
+      in
+      {
         devShells.default = pkgs.mkShell {
+          LIBCLANG_PATH = "${pkgs.llvmPackages_11.libclang.lib}/lib";
+
           shellHook = ''
             ${preCommitHook.shellHook}
           '';
 
           nativeBuildInputs = with pkgs; [
+            clang
             rustc
             rustfmt
             cargo
